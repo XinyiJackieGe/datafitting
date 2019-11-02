@@ -9,7 +9,7 @@ import java.util.Random;
  * However, for now we do not have predict funtionality for KMeans.
  * predict method returns null indicating that.
  */
-public class KMeansClusteringImpt implements Model<Point> {
+public class KMeansClusteringImpl implements Model<Point> {
   private final int k;
   private final int maxIterNum;
   private final double epsilon;
@@ -25,7 +25,7 @@ public class KMeansClusteringImpt implements Model<Point> {
    * @param ransacIterNum iteration number for Ransac
    * @param epsilon error tolerance
    */
-  public KMeansClusteringImpt(int k, int maxIterNum, int ransacIterNum, double epsilon) {
+  public KMeansClusteringImpl(int k, int maxIterNum, int ransacIterNum, double epsilon) {
     this.k = k;
     this.maxIterNum = maxIterNum;
     this.ransacIterNum = ransacIterNum;
@@ -39,7 +39,7 @@ public class KMeansClusteringImpt implements Model<Point> {
    * Construct a KMeansClusteringImpt with default values for some fields.
    * @param k number of centroids
    */
-  public KMeansClusteringImpt(int k) {
+  public KMeansClusteringImpl(int k) {
     this.k = k;
     this.maxIterNum = 10; //FIXME
     this.ransacIterNum = 3;
