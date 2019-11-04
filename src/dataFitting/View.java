@@ -1,3 +1,5 @@
 package dataFitting;
 
-public class View {}
+public interface View {
+  
+}

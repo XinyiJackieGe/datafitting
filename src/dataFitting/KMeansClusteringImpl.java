@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * KMeansClusteringImpt class implements Model interface with fit and predit methods.
- * However, for now we do not have predict funtionality for KMeans.
- * predict method returns null indicating that.
+ * KMeansClusteringImpt class implements Model interface with fit and predit methods. However, for
+ * now we do not have predict funtionality for KMeans. predict method returns null indicating that.
  */
 public class KMeansClusteringImpl implements Model<Point> {
   private final int k;
@@ -20,6 +19,7 @@ public class KMeansClusteringImpl implements Model<Point> {
 
   /**
    * Construct a KMeansClusteringImpt.
+   *
    * @param k number of centroids
    * @param maxIterNum maximum number of interation
    * @param ransacIterNum iteration number for Ransac
@@ -37,11 +37,12 @@ public class KMeansClusteringImpl implements Model<Point> {
 
   /**
    * Construct a KMeansClusteringImpt with default values for some fields.
+   *
    * @param k number of centroids
    */
   public KMeansClusteringImpl(int k) {
     this.k = k;
-    this.maxIterNum = 10; //FIXME
+    this.maxIterNum = 10; // FIXME
     this.ransacIterNum = 3;
     this.epsilon = 0.0001;
     this.clusters = new ArrayList<Cluster>(k);
@@ -57,31 +58,31 @@ public class KMeansClusteringImpl implements Model<Point> {
     }
     double[] minMaxValues = minMaxValues(data);
     double error = Double.MAX_VALUE;
-    
+
     for (int i = 0; i < ransacIterNum; i++) {
-       double newError = calculate(minMaxValues);
-       if (newError < error) {
-         centroids = getCentroidsInRansac();
-       }
-       clearClusters();
+      double newError = calculate(minMaxValues);
+      if (newError < error) {
+        centroids = getCentroidsInRansac();
+      }
+      clearClusters();
     }
     return this;
   }
 
   @Override
   public double[] predict(double[] instance) {
-    return null;  // We don't have predict funtionality for unsupervised learning.
+    return null; // We don't have predict funtionality for unsupervised learning.
   }
-  
+
   @Override
   public List<Point> getFittedParameters() {
-    List<Point> fittedParameters = centroids;
-    return fittedParameters;
+    List<Point> fittedParameters = points;
+    return points;
+    // List<Point> fittedParameters = centroids;
+    // return fittedParameters;
   }
-  
-  /**
-   * Return centroids list in string
-   */
+
+  /** Return centroids list in string */
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < centroids.size(); i++) {
@@ -90,18 +91,17 @@ public class KMeansClusteringImpl implements Model<Point> {
     }
     return sb.toString();
   }
-  
+
   /**
    * Set centroids for the clusters.
+   *
    * @param centroids new centroids
    */
   private void setCentroids(ArrayList<Point> centroids) {
     this.centroids = centroids;
   }
-  
-  /**
-   * Add data points to points array list.
-   */
+
+  /** Add data points to points array list. */
   private void addPoints(double[][] data) {
     for (int i = 0; i < data.length; i++) {
       points.add(new Point(data[i][0], data[i][1]));
@@ -110,6 +110,7 @@ public class KMeansClusteringImpl implements Model<Point> {
 
   /**
    * Get centroids in a loop of Ransac given the current cluster.
+   *
    * @return centroids.
    */
   private ArrayList<Point> getCentroidsInRansac() {
@@ -122,15 +123,14 @@ public class KMeansClusteringImpl implements Model<Point> {
     return centroids;
   }
 
-  /**
-   * Clear cluster information.
-   */
-  private void clearClusters() { 
+  /** Clear cluster information. */
+  private void clearClusters() {
     clusters = new ArrayList<Cluster>(k);
   }
 
   /**
    * Find mininum and maximum values of the input data for random centroid generation.
+   *
    * @param data input data array
    * @return x mininum, maximum, y minimum, maximum
    */
@@ -156,6 +156,7 @@ public class KMeansClusteringImpl implements Model<Point> {
 
   /**
    * Creat a random point as a centroid.
+   *
    * @param minMaxValues minnum and maximum values of the input data.
    * @return generated random centroid
    */
@@ -166,9 +167,7 @@ public class KMeansClusteringImpl implements Model<Point> {
     return new Point(x, y);
   }
 
-  /**
-   * Assign points to clusters.
-   */
+  /** Assign points to clusters. */
   private void assignCluster() {
     double max = Double.MAX_VALUE;
     double min = max;
@@ -190,9 +189,7 @@ public class KMeansClusteringImpl implements Model<Point> {
     }
   }
 
-  /**
-   * Update centroids.
-   */
+  /** Update centroids. */
   private void updateCentroids() {
     for (int i = 0; i < k; i++) {
       double sumX = 0;
@@ -208,13 +205,13 @@ public class KMeansClusteringImpl implements Model<Point> {
       if (instanceLength != 0) {
         clusters.get(i).getCentroid().setX(sumX / instanceLength);
         clusters.get(i).getCentroid().setY(sumY / instanceLength);
-        
       }
     }
   }
 
   /**
    * Calculate percentage error.
+   *
    * @param lastError error in the last iteration
    * @return percentage error
    */
@@ -229,6 +226,7 @@ public class KMeansClusteringImpl implements Model<Point> {
 
   /**
    * Run K-means algorithm and returns percentage error.
+   *
    * @param minMaxValues mininum and maximum values of the input data
    * @return percentage error
    */
@@ -251,8 +249,7 @@ public class KMeansClusteringImpl implements Model<Point> {
       }
       lastError = newError;
     }
-    
+
     return lastError;
   }
-  
 }

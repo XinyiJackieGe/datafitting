@@ -2,8 +2,8 @@ package dataFitting;
 
 import java.io.IOException;
 
-public interface Controller{
-  void go(Model model, View view) throws IOException;
+public interface Controller<T>{
+  void go(Model<T> model) throws IOException;
 }
 
 
