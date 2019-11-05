@@ -2,6 +2,7 @@ package plot.impl;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 import model.Regression;
 import plot.Plotter;
@@ -28,13 +29,13 @@ public class RegressionPlotter implements Plotter<Regression> {
     return new double[] {minX, maxX, minY, maxY};
   }
 
-  private int[] computeStartEndPoints(double a, double b, double c, double[] minMax) {
+  private int[] computeStartEndPoints(double alpha, double beta, double[] minMax) {
     int[] startEndPoints = new int[4];
-    
+
     startEndPoints[0] = (int) minMax[0];
-    startEndPoints[1] = (int) (-c / b - a / b * minMax[0]);
+    startEndPoints[1] = (int) (alpha + beta * minMax[0]);
     startEndPoints[2] = (int) minMax[1];
-    startEndPoints[3] = (int) (-c / b - a / b * minMax[1]);
+    startEndPoints[3] = (int) (alpha + beta * minMax[1]);
 
     return startEndPoints;
   }
@@ -45,6 +46,7 @@ public class RegressionPlotter implements Plotter<Regression> {
     plotter.setWidth(500);
     plotter.setHeight(500);
     double[] minMax = calculateMinMax(data);
+    
     plotter.setDimensions(
         (int) (minMax[0] - 50),
         (int) (minMax[1] + 50),
@@ -56,16 +58,19 @@ public class RegressionPlotter implements Plotter<Regression> {
       int y = (int) instance[1];
       plotter.addPoint(x, y);
     }
-     
+
     double[] parameters = model.getParameters();
-    double a = parameters[0];
-    double b = parameters[1];
-    double c = parameters[2];
-    
-    
-    int[] startEndPoints = computeStartEndPoints(a, b, c, minMax);
-    plotter.addLine(
-    startEndPoints[0], startEndPoints[1], startEndPoints[2], startEndPoints[3], Color.RED);
+    double alpha = parameters[0];
+    double beta = parameters[1];
+//    double a = parameters[0];
+//    double b = parameters[1];
+//    double c = parameters[2];
+
+
+    int[] startEndPoints = computeStartEndPoints(alpha, beta, minMax);
+     plotter.addLine(
+            startEndPoints[0], startEndPoints[1], startEndPoints[2], startEndPoints[3],
+     Color.RED);
 
     plotter.write(outputPath);
   }
