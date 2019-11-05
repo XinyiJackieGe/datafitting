@@ -7,25 +7,16 @@ public class LinearRegression implements Regression {
   private double a;
   private double b;
   private double c;
-  
+
   /** Default constructor. */
   public LinearRegression() {}
 
-//  /**
-//   * Private constructor given a, b, c, for new model return purpose.
-//   *
-//   * @param a parameter a
-//   * @param b parameter b
-//   * @param c parameter c
-//   */
-//  private LinearRegressionImpl(double a, double b, double c) {
-//    this.a = a;
-//    this.b = b;
-//    this.c = c;
-//  }
-  
   @Override
   public void fit(double[][] data) {
+    if (data.length < 30) {
+      throw new IllegalArgumentException("Insufficient data for Linear Regression fitting!");
+    }
+    
     double[] means = calculateMean(data);
     double[] sumOfSquaredErrors = calculateSumOfSquaredErrors(data, means);
     double d = computeD(sumOfSquaredErrors);
@@ -33,7 +24,7 @@ public class LinearRegression implements Regression {
     double t = computeT(sumOfSquaredErrors, theta);
 
     a = Math.cos(t / 2);
-    b = Math.asin(t / 2);
+    b = Math.sin(t / 2);
     c = -a * means[0] - b * means[1];
   }
 
@@ -51,7 +42,7 @@ public class LinearRegression implements Regression {
     fittedParameters[2] = c;
     return fittedParameters;
   }
-  
+
   /**
    * Calculate x and y means.
    *
@@ -59,8 +50,9 @@ public class LinearRegression implements Regression {
    * @return x and y means
    */
   private double[] calculateMean(double[][] data) {
-    double[] means = new double[2];
+    double[] means = new double[] {0.0, 0.0};
     int instanceLength = data.length;
+    
     for (int i = 0; i < instanceLength; i++) {
       means[0] += data[i][0];
       means[1] += data[i][1];
@@ -83,7 +75,7 @@ public class LinearRegression implements Regression {
     double sXY = 0;
     for (int i = 0; i < data.length; i++) {
       sYY += (data[i][1] - means[1]) * (data[i][1] - means[1]);
-      sXX += (data[i][0] - means[0]) * (data[i][1] - means[0]);
+      sXX += (data[i][0] - means[0]) * (data[i][0] - means[0]);
       sXY += (data[i][0] - means[0]) * (data[i][1] - means[1]);
     }
 
@@ -127,5 +119,4 @@ public class LinearRegression implements Regression {
       return theta + 180;
     }
   }
-
 }

@@ -217,8 +217,8 @@ public class KMeans implements Clusterer {
    */
   public KMeans(int k) {
     this.k = k;
-    this.maxIterNum = 10; // FIXME
-    this.ransacIterNum = 3;
+    this.maxIterNum = 100; // FIXME
+    this.ransacIterNum = 10;
     this.epsilon = 0.0001;
     this.clusters = new ArrayList<Cluster>(k);
     this.points = new ArrayList<Point>();
@@ -330,7 +330,7 @@ public class KMeans implements Clusterer {
     double minY = Double.MAX_VALUE;
     double maxX = Double.MIN_VALUE;
     double maxY = Double.MIN_VALUE;
-    for (int i = 0; i < points.size(); i++) {
+    for (int i = 0; i < data.length; i++) {
       if (data[i][0] < minX) {
         minX = data[i][0];
       } else if (data[i][0] > maxX) {

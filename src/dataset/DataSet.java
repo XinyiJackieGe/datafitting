@@ -22,9 +22,14 @@ public class DataSet {
     String line;
     while ((line = in.readLine()) != null) {
       String[] vals = line.trim().split(" ");
-      double[] doubleValues = Arrays.stream(vals).mapToDouble(Double::parseDouble).toArray();
-      inputData.add(doubleValues);
+      if (vals.length > 2) {
+        throw new IllegalArgumentException("More than two values in a line!");
+      }else if(vals.length == 2){
+        double[] doubleValues = Arrays.stream(vals).mapToDouble(Double::parseDouble).toArray();
+        inputData.add(doubleValues);
+      }
     }
+     
     double[][] data = new double[inputData.size()][2];
     inputData.toArray(data);
     in.close();
