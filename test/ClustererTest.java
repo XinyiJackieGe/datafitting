@@ -24,8 +24,7 @@ public class ClustererTest {
 
   @Test
   public void invalidTestKMeansKEqualsZero() throws IllegalArgumentException {
-    // k cannot be zero
-
+    // k cannot be zer0.
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("k cannot be zero!");
 
