@@ -1,7 +1,6 @@
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
 import model.Clusterer;
+import model.Model;
 import model.Regression;
 import model.impl.KMeans;
 import model.impl.LinearRegression;
@@ -9,50 +8,37 @@ import plot.Plotter;
 import plot.impl.ClustererPlotter;
 import plot.impl.RegressionPlotter;
 
+/** Runner class runs models and plot figures given input and output file path. */
 public class Runner {
   public static void main(String[] args) throws IOException {
-    String filePath = "input/linedata-1.txt"; // FIXME
-    double[][] data = dataset.DataSet.load(filePath);
+    //Linear regression.
+    String filePathLinear = "input/linedata-1.txt";
     Regression linearRegression = new LinearRegression();
-    linearRegression.fit(data);
-   
     String linearRegressionOutputPath = "output/linear.png";
     Plotter<Regression> regressionPlotter = new RegressionPlotter();
-    regressionPlotter.plot(linearRegression, data, linearRegressionOutputPath);
+    RunController<Regression> rclr = new RunControllerImpl<Regression>();
+    rclr.go(linearRegression, filePathLinear, linearRegressionOutputPath, regressionPlotter);
 
-    //    double a = 2.0;
-    //    double b = 1.5;
-    //    double c = 3.5;
-    //
-    //    Random rand = new Random();
-    //    double minX = -20.0;
-    //    double maxX = 50;
-    //    double minY = -c / b - a / b * minX;
-    //    double maxY = -c / b - a / b * maxX;
-    //    double[][] dataTest = new double[100][2];
-    //    for (int i = 0; i < 100; i++) {
-    //      dataTest[i][0] = minX + (maxX - misnX) * rand.nextDouble();
-    //      dataTest[i][1] = -c / b - a / b * dataTest[i][0];
-    //    }
-    //    Regression linearRegressionTest = new LinearRegression();
-    //    linearRegressionTest.fit(dataTest);
-    //    System.out.println( linearRegressionTest.getParameters()[0]);
-    //    System.out.println( linearRegressionTest.getParameters()[1]);
-    //    System.out.println( linearRegressionTest.getParameters()[2]);
-    //    String linearRegressionOutputPath = "output/linearTest.png";
-    //    Plotter<Regression> regressionPlotter = new RegressionPlotter();
-    //    regressionPlotter.plot(linearRegressionTest, dataTest, linearRegressionOutputPath);
-    //
-
-    //    String filePath = "input/clusterdata-6.txt"; // FIXME
-    //    double[][] data = dataset.DataSet.load(filePath);
-    //    int k = 6;
-    //    KMeans kMeans = new KMeans(k);
-    //    kMeans.fit(data);
-    //    String kMeansOutputPath = "output/cluster.png"; // FIXME
-    //    Plotter<Clusterer> clustererPlotter = new ClustererPlotter();
-    //    clustererPlotter.plot(kMeans, data, kMeansOutputPath);
-
+    // KMeans.
+    String filePathKMeans = "input/clusterdata-2.txt";
+    int k = 2;
+    KMeans kMeans = new KMeans(k);
+    String kMeansOutputPath = "output/cluster.png";
+    Plotter<Clusterer> clustererPlotter = new ClustererPlotter();
+    
+    RunController<Clusterer> rckm = new RunControllerImpl<Clusterer>();
+    rckm.go(kMeans, filePathKMeans, kMeansOutputPath, clustererPlotter);
+   
     System.out.println("Done");
+  }
+}
+
+class RunControllerImpl<T extends Model> implements RunController<T> {
+  @Override
+  public void go(T model, String inputPath, String outputPath, Plotter<T> plotter)
+      throws IOException {
+    double[][] data = dataset.DataSet.load(inputPath);
+    model.fit(data);
+    plotter.plot(model, data, outputPath);
   }
 }

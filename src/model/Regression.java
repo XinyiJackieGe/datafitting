@@ -4,6 +4,7 @@ package model;
 public interface Regression extends Model {
   /**
    * Predict y value given an x instance.
+   *
    * @param instance an x instance
    * @return predicted y
    */
@@ -11,7 +12,8 @@ public interface Regression extends Model {
 
   /**
    * Get fitted parameters.
-   * @return fitted parameters a, b, c
+   *
+   * @return fitted parameters alpha, beta
    */
   double[] getParameters();
 }

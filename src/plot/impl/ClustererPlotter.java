@@ -6,11 +6,26 @@ import java.io.IOException;
 import model.Clusterer;
 import plot.Plotter;
 
+/** Clusterer plotter implements Plotter. */
 public class ClustererPlotter implements Plotter<Clusterer> {
+  private static Color[] COLORS =
+      new Color[] {
+        Color.RED,
+        Color.GREEN,
+        Color.BLUE,
+        Color.ORANGE,
+        Color.PINK,
+        Color.CYAN,
+        Color.MAGENTA,
+        Color.YELLOW
+      };
 
-  private static Color[] COLORS = new Color[] {Color.RED, Color.GREEN, Color.BLUE, Color.ORANGE,
-      Color.PINK, Color.CYAN, Color.MAGENTA, Color.YELLOW};
-
+  /**
+   * Calculate minimum and maximum data points in data.
+   *
+   * @param data x,y matrix
+   * @return x minimum, x maximum, y minimum, y maximum
+   */
   private double[] calculateMinMax(double[][] data) {
     double minX = Double.MAX_VALUE;
     double minY = Double.MAX_VALUE;
@@ -30,7 +45,7 @@ public class ClustererPlotter implements Plotter<Clusterer> {
     }
     return new double[] {minX, maxX, minY, maxY};
   }
-  
+
   @Override
   public void plot(Clusterer model, double[][] data, String outputPath) throws IOException {
     ImagePlotter plotter = new ImagePlotter();
@@ -42,7 +57,7 @@ public class ClustererPlotter implements Plotter<Clusterer> {
         (int) (minMax[1] + 50),
         (int) (minMax[2] - 50),
         (int) (minMax[3] + 50));
-    
+
     for (double[] instance : data) {
       int clusterIndex = model.cluster(instance);
       Color color = COLORS[clusterIndex % COLORS.length];

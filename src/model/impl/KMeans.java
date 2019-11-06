@@ -6,7 +6,7 @@ import model.Clusterer;
 
 /**
  * KMeansClusteringImpt class implements Model interface with fit and predit methods. However, for
- * now we do not have predict funtionality for KMeans. predict method returns null indicating that.
+ * now we do not have predict functionality for KMeans. predict method returns null indicating that.
  */
 public class KMeans implements Clusterer {
   private final int k;
@@ -16,8 +16,6 @@ public class KMeans implements Clusterer {
   private ArrayList<Cluster> clusters;
   private ArrayList<Point> points;
   private ArrayList<Point> centroids;
-
-  
 
   /**
    * Construct a point.
@@ -29,7 +27,7 @@ public class KMeans implements Clusterer {
     private double x;
     private double y;
     private int centroidId;
-    
+
     public Point(double x, double y) {
       this.setX(x);
       this.setY(y);
@@ -45,7 +43,7 @@ public class KMeans implements Clusterer {
     }
 
     /**
-     * Set x coodinate.
+     * Set x coordinate.
      *
      * @param x coordinate
      */
@@ -54,7 +52,7 @@ public class KMeans implements Clusterer {
     }
 
     /**
-     * Get y coodinate.
+     * Get y coordinate.
      *
      * @param y
      */
@@ -117,10 +115,8 @@ public class KMeans implements Clusterer {
       return sb.toString();
     }
   }
-  
-  /**
-   * Cluster class contains points within the cluster. 
-   */
+
+  /** Cluster class contains points within the cluster. */
   public class Cluster {
     private int id;
     private Point centroid;
@@ -128,6 +124,7 @@ public class KMeans implements Clusterer {
 
     /**
      * Construct a Cluster object.
+     *
      * @param id cluster id
      */
     public Cluster(int id) {
@@ -136,8 +133,9 @@ public class KMeans implements Clusterer {
       this.points = new ArrayList<Point>();
     }
 
-    /** Get centroid point of the cluster.
-     * 
+    /**
+     * Get centroid point of the cluster.
+     *
      * @return centroid point
      */
     public Point getCentroid() {
@@ -146,6 +144,7 @@ public class KMeans implements Clusterer {
 
     /**
      * Set centroid point to the cluster.
+     *
      * @param centroid point
      */
     public void setCentroid(Point centroid) {
@@ -154,6 +153,7 @@ public class KMeans implements Clusterer {
 
     /**
      * Get cluster id of this cluster.
+     *
      * @return cluster id
      */
     public int getId() {
@@ -162,6 +162,7 @@ public class KMeans implements Clusterer {
 
     /**
      * Get points within with this cluster.
+     *
      * @return points within with this cluster
      */
     public ArrayList<Point> getPoints() {
@@ -170,23 +171,23 @@ public class KMeans implements Clusterer {
 
     /**
      * Add a point to the cluster.
+     *
      * @param point new point
      */
     public void addPoint(Point point) {
       points.add(point);
     }
 
-    /** 
+    /**
      * Set points.
+     *
      * @param points
      */
     public void setPoints(ArrayList<Point> points) {
       this.points = points;
     }
 
-    /**
-     * Clear the cluster.
-     */
+    /** Clear the cluster. */
     public void clear() {
       points.clear();
     }
@@ -201,6 +202,9 @@ public class KMeans implements Clusterer {
    * @param epsilon error tolerance
    */
   public KMeans(int k, int maxIterNum, int ransacIterNum, double epsilon) {
+    if (k == 0) {
+      throw new IllegalArgumentException("k cannot be zero!");
+    }
     this.k = k;
     this.maxIterNum = maxIterNum;
     this.ransacIterNum = ransacIterNum;
@@ -209,15 +213,18 @@ public class KMeans implements Clusterer {
     this.points = new ArrayList<Point>();
     this.setCentroids(new ArrayList<Point>(k));
   }
-  
+
   /**
    * Construct a KMeansClusteringImpt with default values for some fields.
    *
    * @param k number of centroids
    */
   public KMeans(int k) {
+    if (k == 0) {
+      throw new IllegalArgumentException("k cannot be zero!");
+    }
     this.k = k;
-    this.maxIterNum = 100; // FIXME
+    this.maxIterNum = 500;
     this.ransacIterNum = 10;
     this.epsilon = 0.0001;
     this.clusters = new ArrayList<Cluster>(k);
@@ -241,7 +248,6 @@ public class KMeans implements Clusterer {
         centroids = getCentroidsInRansac();
       }
     }
-
   }
 
   @Override
@@ -253,15 +259,15 @@ public class KMeans implements Clusterer {
     double distance = 0.0;
 
     for (int i = 0; i < k; i++) {
-        Cluster c = clusters.get(i);
-        distance = Point.distance(instancePoint, c.getCentroid());
-        if (distance < min) {
-          min = distance;
-          cluster = i;
-        }
+      Cluster c = clusters.get(i);
+      distance = Point.distance(instancePoint, c.getCentroid());
+      if (distance < min) {
+        min = distance;
+        cluster = i;
       }
+    }
     instancePoint.setCluster(cluster);
-    
+
     return instancePoint.getCluster();
   }
 
@@ -274,7 +280,7 @@ public class KMeans implements Clusterer {
     }
     return fittedParameters;
   }
-  
+
   /** Return centroids list in string */
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -300,7 +306,7 @@ public class KMeans implements Clusterer {
       points.add(new Point(data[i][0], data[i][1]));
     }
   }
-  
+
   /**
    * Get centroids in a loop of Ransac given the current cluster.
    *

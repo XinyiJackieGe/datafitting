@@ -2,13 +2,18 @@ package plot.impl;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
 import model.Regression;
 import plot.Plotter;
 
+/** Regression plotter class implements Plotter. */
 public class RegressionPlotter implements Plotter<Regression> {
 
+  /**
+   * Calculate minimum and maximum data points in data.
+   *
+   * @param data x,y matrix
+   * @return x minimum, x maximum, y minimum, y maximum
+   */
   private double[] calculateMinMax(double[][] data) {
     double minX = Double.MAX_VALUE;
     double minY = Double.MAX_VALUE;
@@ -29,6 +34,14 @@ public class RegressionPlotter implements Plotter<Regression> {
     return new double[] {minX, maxX, minY, maxY};
   }
 
+  /**
+   * Compute start and end points for fitted line.
+   *
+   * @param alpha fitted parameter
+   * @param beta fitted parameter
+   * @param minMax minimum and maximum data points
+   * @return start and end points
+   */
   private int[] computeStartEndPoints(double alpha, double beta, double[] minMax) {
     int[] startEndPoints = new int[4];
 
@@ -46,7 +59,7 @@ public class RegressionPlotter implements Plotter<Regression> {
     plotter.setWidth(500);
     plotter.setHeight(500);
     double[] minMax = calculateMinMax(data);
-    
+
     plotter.setDimensions(
         (int) (minMax[0] - 50),
         (int) (minMax[1] + 50),
@@ -62,15 +75,10 @@ public class RegressionPlotter implements Plotter<Regression> {
     double[] parameters = model.getParameters();
     double alpha = parameters[0];
     double beta = parameters[1];
-//    double a = parameters[0];
-//    double b = parameters[1];
-//    double c = parameters[2];
-
 
     int[] startEndPoints = computeStartEndPoints(alpha, beta, minMax);
-     plotter.addLine(
-            startEndPoints[0], startEndPoints[1], startEndPoints[2], startEndPoints[3],
-     Color.RED);
+    plotter.addLine(
+        startEndPoints[0], startEndPoints[1], startEndPoints[2], startEndPoints[3], Color.RED);
 
     plotter.write(outputPath);
   }

@@ -15,9 +15,8 @@ import javax.imageio.ImageIO;
  * This class is a plotter of data onto an image. It provides operations to add points, lines and
  * circles to draw on the image.
  *
- * <p>
- * It is also possible to set the size of the image to be created, along with the range of the data
- * that is provided to it.
+ * <p>It is also possible to set the size of the image to be created, along with the range of the
+ * data that is provided to it.
  */
 public class ImagePlotter {
   private List<Integer> points;
@@ -34,6 +33,7 @@ public class ImagePlotter {
   private int width;
   private int height;
 
+  /** ImagePlotter constructor. */
   public ImagePlotter() {
     reset();
     pointSize = 3;
@@ -41,7 +41,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Add a point to be drawn on the image
+   * Add a point to be drawn on the image.
    *
    * @param x
    * @param y
@@ -53,7 +53,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Add a point to be drawn on the image with the specific color
+   * Add a point to be drawn on the image with the specific color.
    *
    * @param x
    * @param y
@@ -66,7 +66,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Add a line to be drawn on the image
+   * Add a line to be drawn on the image.
    *
    * @param x1
    * @param y1
@@ -82,7 +82,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Add a line to be drawn on to the image with the specified color
+   * Add a line to be drawn on to the image with the specified color.
    *
    * @param x1
    * @param y1
@@ -99,7 +99,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Add a circle to be drawn on to the image
+   * Add a circle to be drawn on to the image.
    *
    * @param x
    * @param y
@@ -113,7 +113,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Add a circle to be drawn on to the image with the specified color
+   * Add a circle to be drawn on to the image with the specified color.
    *
    * @param x
    * @param y
@@ -129,7 +129,7 @@ public class ImagePlotter {
 
   /**
    * Set the range in which all the added points, circles and lines lie. This provides the range of
-   * the data as added to this plotter
+   * the data as added to this plotter.
    *
    * @param xmin
    * @param xmax
@@ -158,7 +158,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Draw all the shapes added thus far to an image and save it to the specific path
+   * Draw all the shapes added thus far to an image and save it to the specific path.
    *
    * @param path
    * @throws IOException
@@ -174,16 +174,17 @@ public class ImagePlotter {
     mat.concatenate(AffineTransform.getTranslateInstance(0, this.height));
     mat.concatenate(AffineTransform.getScaleInstance(1, -1));
 
-    mat.concatenate(AffineTransform.getScaleInstance((double) this.width / (xmax - xmin),
-        (double) this.height / (ymax - ymin)));
+    mat.concatenate(
+        AffineTransform.getScaleInstance(
+            (double) this.width / (xmax - xmin), (double) this.height / (ymax - ymin)));
     mat.concatenate(AffineTransform.getTranslateInstance(-xmin, -ymin));
 
     g2d.setTransform(mat);
 
     for (int i = 0; i < points.size(); i += 2) {
       g2d.setColor(pointColors.get(i / 2));
-      g2d.fillOval(points.get(i) - pointSize, points.get(i + 1) - pointSize, 2 * pointSize,
-          2 * pointSize);
+      g2d.fillOval(
+          points.get(i) - pointSize, points.get(i + 1) - pointSize, 2 * pointSize, 2 * pointSize);
     }
 
     for (int i = 0; i < lines.size(); i += 4) {
@@ -212,7 +213,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Set the width of the image that is created by this plotter
+   * Set the width of the image that is created by this plotter.
    *
    * @param w
    */
@@ -221,7 +222,7 @@ public class ImagePlotter {
   }
 
   /**
-   * Set the height of the image that is created by this plotter
+   * Set the height of the image that is created by this plotter.
    *
    * @param h
    */
