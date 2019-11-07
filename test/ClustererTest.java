@@ -12,13 +12,25 @@ public class ClustererTest {
 
   @Test
   public void invalidTestKMeansDataFewerThanK() throws IllegalArgumentException {
-    // Insufficient data for KMeans Clusterer fitting!
+    // Insufficient data for KMeans Clusterer fitting.
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("Not sufficient data!");
 
     int k = 3;
     KMeans kMeans = new KMeans(k);
     double[][] testData = {{1.0, 1.0}, {2.0, 2.0}};
+    kMeans.fit(testData);
+  }
+  
+  @Test
+  public void invalidTestKMeansDataMissing() throws IllegalArgumentException {
+    // Too many missing, insufficient data for KMeans Clusterer fitting.
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage("Not sufficient data!");
+
+    int k = 3;
+    KMeans kMeans = new KMeans(k);
+    double[][] testData = {{1.0, 1.0}, {2.0, 2.0}, {3.0, }};
     kMeans.fit(testData);
   }
 
