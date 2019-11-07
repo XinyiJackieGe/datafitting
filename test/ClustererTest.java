@@ -28,7 +28,7 @@ public class ClustererTest {
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("k cannot be non-positive!");
     int k = 0;
-    KMeans kMeans = new KMeans(k);
+    new KMeans(k);
   }
 
   @Test
@@ -37,7 +37,7 @@ public class ClustererTest {
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("k cannot be non-positive!");
     int k = -1;
-    KMeans kMeans = new KMeans(k);
+    new KMeans(k);
   }
 
   @Test

@@ -43,8 +43,8 @@ public class ImagePlotter {
   /**
    * Add a point to be drawn on the image.
    *
-   * @param x
-   * @param y
+   * @param x x coordinate
+   * @param y y coordinate
    */
   public void addPoint(int x, int y) {
     points.add(x);
@@ -55,9 +55,9 @@ public class ImagePlotter {
   /**
    * Add a point to be drawn on the image with the specific color.
    *
-   * @param x
-   * @param y
-   * @param col
+   * @param x coordinate
+   * @param y coordinate
+   * @param col color
    */
   public void addPoint(int x, int y, Color col) {
     points.add(x);
@@ -68,10 +68,10 @@ public class ImagePlotter {
   /**
    * Add a line to be drawn on the image.
    *
-   * @param x1
-   * @param y1
-   * @param x2
-   * @param y2
+   * @param x1 x coordinate for point 1
+   * @param y1 y coordinate for point 1
+   * @param x2 x coordinate for point 2
+   * @param y2 y coordinate for point 2
    */
   public void addLine(int x1, int y1, int x2, int y2) {
     lines.add(x1);
@@ -84,11 +84,11 @@ public class ImagePlotter {
   /**
    * Add a line to be drawn on to the image with the specified color.
    *
-   * @param x1
-   * @param y1
-   * @param x2
-   * @param y2
-   * @param col
+   * @param x1 x coordinate for point 1
+   * @param y1 y coordinate for point 1
+   * @param x2 x coordinate for point 2
+   * @param y2 x coordinate for point 2
+   * @param col color
    */
   public void addLine(int x1, int y1, int x2, int y2, Color col) {
     lines.add(x1);
@@ -101,9 +101,9 @@ public class ImagePlotter {
   /**
    * Add a circle to be drawn on to the image.
    *
-   * @param x
-   * @param y
-   * @param radius
+   * @param x coordinate
+   * @param y coordinate
+   * @param radius for drawing a circle
    */
   public void addCircle(int x, int y, int radius) {
     circles.add(x);
@@ -115,10 +115,10 @@ public class ImagePlotter {
   /**
    * Add a circle to be drawn on to the image with the specified color.
    *
-   * @param x
-   * @param y
-   * @param radius
-   * @param col
+   * @param x coordinate
+   * @param y coordinate
+   * @param radius for drawing a circle
+   * @param col color
    */
   public void addCircle(int x, int y, int radius, Color col) {
     circles.add(x);
@@ -131,10 +131,10 @@ public class ImagePlotter {
    * Set the range in which all the added points, circles and lines lie. This provides the range of
    * the data as added to this plotter.
    *
-   * @param xmin
-   * @param xmax
-   * @param ymin
-   * @param ymax
+   * @param xmin x minumum
+   * @param xmax x maximum
+   * @param ymin y minimum
+   * @param ymax y maximum
    */
   public void setDimensions(int xmin, int xmax, int ymin, int ymax) {
     this.xmin = xmin;
@@ -160,8 +160,8 @@ public class ImagePlotter {
   /**
    * Draw all the shapes added thus far to an image and save it to the specific path.
    *
-   * @param path
-   * @throws IOException
+   * @param path to write
+   * @throws IOException throw IOException if file path cannot be found
    */
   public void write(String path) throws IOException {
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -215,7 +215,7 @@ public class ImagePlotter {
   /**
    * Set the width of the image that is created by this plotter.
    *
-   * @param w
+   * @param w width
    */
   public void setWidth(int w) {
     width = w;
@@ -224,7 +224,7 @@ public class ImagePlotter {
   /**
    * Set the height of the image that is created by this plotter.
    *
-   * @param h
+   * @param h height
    */
   public void setHeight(int h) {
     height = h;

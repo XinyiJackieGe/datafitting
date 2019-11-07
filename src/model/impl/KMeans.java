@@ -17,17 +17,18 @@ public class KMeans implements Clusterer {
   private ArrayList<Point> points;
   private ArrayList<Point> centroids;
 
-  /**
-   * Construct a point.
-   *
-   * @param x coordinate
-   * @param y coordinate
-   */
+  /** Point class defines a point with x, y coordinates and the cluster it is within. */
   public static class Point {
     private double x;
     private double y;
     private int centroidId;
 
+    /**
+     * Construct a point.
+     *
+     * @param x coordinate
+     * @param y coordinate
+     */
     public Point(double x, double y) {
       this.setX(x);
       this.setY(y);
@@ -51,11 +52,7 @@ public class KMeans implements Clusterer {
       this.x = x;
     }
 
-    /**
-     * Get y coordinate.
-     *
-     * @param y
-     */
+    /** Get y coordinate. */
     public double getY() {
       return y;
     }
@@ -181,7 +178,7 @@ public class KMeans implements Clusterer {
     /**
      * Set points.
      *
-     * @param points
+     * @param points from data
      */
     public void setPoints(ArrayList<Point> points) {
       this.points = points;
@@ -281,7 +278,7 @@ public class KMeans implements Clusterer {
     return fittedParameters;
   }
 
-  /** Return centroids list in string */
+  /** Return centroids list in string. */
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < centroids.size(); i++) {

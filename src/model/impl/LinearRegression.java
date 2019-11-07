@@ -7,9 +7,6 @@ public class LinearRegression implements Regression {
   private double alpha;
   private double beta;
 
-  /** Default constructor. */
-  public LinearRegression() {}
-
   @Override
   public void fit(double[][] data) {
     if (data.length < 30) {
@@ -22,11 +19,9 @@ public class LinearRegression implements Regression {
     double[] sumOfSquaredErrors = calculateSumOfSquaredErrors(data, x_mean, y_mean);
     double sXX = sumOfSquaredErrors[1];
     double sXY = sumOfSquaredErrors[2];
-    
+
     beta = sXY / sXX;
     alpha = y_mean - beta * x_mean;
-    
-    
   }
 
   @Override
@@ -35,11 +30,11 @@ public class LinearRegression implements Regression {
   }
 
   @Override
-  public double[] getParameters() {  
+  public double[] getParameters() {
     double[] fittedParameters = new double[2];
     fittedParameters[0] = alpha;
     fittedParameters[1] = beta;
-    return fittedParameters; 
+    return fittedParameters;
   }
 
   /**
@@ -51,9 +46,9 @@ public class LinearRegression implements Regression {
   private double[] calculateMean(double[][] data) {
     double[] means = new double[] {0.0, 0.0};
     int instanceLength = data.length;
-   
+
     for (int i = 0; i < instanceLength; i++) {
-      if(data[i].length != 2) {
+      if (data[i].length != 2) {
         instanceLength--;
         continue;
       } else {
@@ -61,7 +56,7 @@ public class LinearRegression implements Regression {
         means[1] += data[i][1];
       }
     }
-    if(instanceLength < 30) {
+    if (instanceLength < 30) {
       throw new IllegalArgumentException("Insufficient data for Linear Regression fitting!");
     }
 
@@ -77,19 +72,18 @@ public class LinearRegression implements Regression {
    * @param means x, y means
    * @return Syy, Sxx, Sxy
    */
-  private double[] calculateSumOfSquaredErrors(double[][] data, double x_mean, double y_mean) {
+  private double[] calculateSumOfSquaredErrors(double[][] data, double xMean, double yMean) {
     double sYY = 0;
     double sXX = 0;
     double sXY = 0;
     for (int i = 0; i < data.length; i++) {
       double x = data[i][0];
       double y = data[i][1];
-      sYY += ((y - y_mean) * (y - y_mean));
-      sXX += ((x - x_mean) * (x - x_mean));
-      sXY += ((x - x_mean) * (y - y_mean));
+      sYY += ((y - yMean) * (y - yMean));
+      sXX += ((x - xMean) * (x - xMean));
+      sXY += ((x - xMean) * (y - yMean));
     }
 
     return new double[] {sYY, sXX, sXY};
   }
-
 }

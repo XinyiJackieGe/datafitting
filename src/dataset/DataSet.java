@@ -13,7 +13,7 @@ public class DataSet {
    *
    * @param path file path
    * @return data 2-d double array
-   * @throws IOException
+   * @throws IOException throws exception if file path is not found.
    */
   public static double[][] load(String path) throws IOException {
     BufferedReader in = new BufferedReader(new FileReader(path));
@@ -22,6 +22,7 @@ public class DataSet {
     while ((line = in.readLine()) != null) {
       String[] vals = line.trim().split(" ");
       if (vals.length > 2) {
+        in.close();
         throw new IllegalArgumentException("More than two values in a line!");
       } else if (vals.length == 2) {
         double[] doubleValues = Arrays.stream(vals).mapToDouble(Double::parseDouble).toArray();

@@ -15,7 +15,7 @@ public interface Plotter<T extends Model> {
    * @param model either regression or clusterer
    * @param data x, y matrix
    * @param outputPath to display figure
-   * @throws IOException
+   * @throws IOException throw IOException if file path cannot be found
    */
   void plot(T model, double[][] data, String outputPath) throws IOException;
 }
