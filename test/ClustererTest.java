@@ -24,11 +24,19 @@ public class ClustererTest {
 
   @Test
   public void invalidTestKMeansKEqualsZero() throws IllegalArgumentException {
-    // k cannot be zer0.
+    // k cannot be zero.
     thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("k cannot be zero!");
-
+    thrown.expectMessage("k cannot be non-positive!");
     int k = 0;
+    KMeans kMeans = new KMeans(k);
+  }
+
+  @Test
+  public void invalidTestKMeanskNegative() throws IllegalArgumentException {
+    // k cannot be negative.
+    thrown.expect(IllegalArgumentException.class);
+    thrown.expectMessage("k cannot be non-positive!");
+    int k = -1;
     KMeans kMeans = new KMeans(k);
   }
 
@@ -42,7 +50,6 @@ public class ClustererTest {
     };
     kMeans.fit(testData);
     double[][] para = kMeans.getParameters();
-
     assertEquals(1, para.length);
     assertEquals(2.55, para[0][0], 1.0);
     assertEquals(2.87, para[0][1], 1.0);

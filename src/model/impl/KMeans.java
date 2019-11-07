@@ -202,8 +202,8 @@ public class KMeans implements Clusterer {
    * @param epsilon error tolerance
    */
   public KMeans(int k, int maxIterNum, int ransacIterNum, double epsilon) {
-    if (k == 0) {
-      throw new IllegalArgumentException("k cannot be zero!");
+    if (k <= 0) {
+      throw new IllegalArgumentException("k cannot be non-positive!");
     }
     this.k = k;
     this.maxIterNum = maxIterNum;
@@ -220,8 +220,8 @@ public class KMeans implements Clusterer {
    * @param k number of centroids
    */
   public KMeans(int k) {
-    if (k == 0) {
-      throw new IllegalArgumentException("k cannot be zero!");
+    if (k <= 0) {
+      throw new IllegalArgumentException("k cannot be non-positive!");
     }
     this.k = k;
     this.maxIterNum = 500;
@@ -303,7 +303,13 @@ public class KMeans implements Clusterer {
   /** Add data points to points array list. */
   private void addPoints(double[][] data) {
     for (int i = 0; i < data.length; i++) {
-      points.add(new Point(data[i][0], data[i][1]));
+      if (data[i].length == 2) {
+        points.add(new Point(data[i][0], data[i][1]));
+      }
+    }
+
+    if (points.size() < k) {
+      throw new IllegalArgumentException("Not sufficient data!");
     }
   }
 

@@ -1,4 +1,3 @@
-/** JUnit test class to test construction of Coupon object and operations. */
 import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,7 +44,6 @@ public class RegressionTest {
     };
     linearRegression.fit(testData);
     double[] para = linearRegression.getParameters();
-
     assertEquals(2, para.length);
     assertEquals(0.6616847826086989, para[0], DELTA);
     assertEquals(0.9660326086956519, para[1], DELTA);
@@ -60,7 +58,6 @@ public class RegressionTest {
     // insufficient data for linearRegression
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("Insufficient data for Linear Regression fitting!");
-    // "Insufficient data for Linear Regression fitting!"
     Regression linearRegression = new LinearRegression();
     double[][] testData = {
       {1.0, 1.0}, {2.0, 2.0}, {3.0, 3.0}, {4.0, 4.0}, {5.0, 5.0},
@@ -75,7 +72,6 @@ public class RegressionTest {
     // data with too much missing values for linear regression
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("Insufficient data for Linear Regression fitting!");
-    // "Insufficient data for Linear Regression fitting!"
     Regression linearRegression = new LinearRegression();
     double[][] testData = {
       {1.0, 1.0, 1.0},
